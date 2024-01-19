@@ -13,6 +13,7 @@ import JobRouter from "./routers/jobRouter.js";
 import AuthRouter from "./routers/authRouter.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import { authenticateUser } from "./middleware/authMiddleware.js";
+import userRouter from "./routers/userRouter.js";
 
 if (process.env.NODE_ENV === "Development") {
   app.use(morgan("dev"));
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use("/api/v1/jobs", authenticateUser, JobRouter);
 app.use("/api/v1/Auth", AuthRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 
 app.get("*", (req, res) => {
   res.status(400).json({ msg: "not route found" });

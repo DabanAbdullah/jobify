@@ -5,7 +5,7 @@ import {
   validateLoginInput,
 } from "../middleware/validationMiddleware.js";
 
-import { Login, Register } from "../controllers/authController.js";
+import { Login, Register, logout } from "../controllers/authController.js";
 
 const router = Router();
 
@@ -14,5 +14,6 @@ const router = Router();
 
 router.post("/register", validateUserInput, Register);
 router.post("/login", validateLoginInput, Login);
+router.get("/logout", logout);
 
 export default router;

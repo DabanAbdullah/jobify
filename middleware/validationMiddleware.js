@@ -106,7 +106,7 @@ export const validateParam = withValidationErrors([
 
     const isadmin = req.user.role === "admin";
     const isownser = req.user.userId === job.createdBy.toString();
-    if (!isadmin || !isownser)
+    if (!isadmin && !isownser)
       throw new UnauthorizedError("not autherized to access this route ");
 
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
