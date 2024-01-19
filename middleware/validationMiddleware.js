@@ -1,5 +1,9 @@
 import { body, param, validationResult } from "express-validator";
-import { BadRequestError, NotFoundError } from "../errors/customError.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../errors/customError.js";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
 import mongoose from "mongoose";
 import Job from "../models/jobModel.js";
@@ -14,6 +18,10 @@ const withValidationErrors = (validateValues) => {
         if (errorMessages[0].startsWith("no job")) {
           throw new NotFoundError(errorMessages);
         }
+        if (errorMessages[0].startsWith("not autherized")) {
+          throw new UnauthorizedError("not autherized to access this route ");
+        }
+
         throw new BadRequestError(errorMessages);
       }
       next();
@@ -91,10 +99,16 @@ export const validateUserInput = withValidationErrors([
 ]);
 
 export const validateParam = withValidationErrors([
-  param("id").custom(async (value) => {
+  param("id").custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new BadRequestError("invalid MongoDB id");
     const job = await Job.findById(value);
+
+    const isadmin = req.user.role === "admin";
+    const isownser = req.user.userId === job.createdBy.toString();
+    if (!isadmin || !isownser)
+      throw new UnauthorizedError("not autherized to access this route ");
+
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
   }),
 ]);
