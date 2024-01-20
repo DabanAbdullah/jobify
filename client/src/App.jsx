@@ -13,6 +13,8 @@ import {
   Admin,
 } from "./pages";
 
+import { action as registerAction } from "./pages/Register";
+import { action as loginaction } from "./pages/Login";
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
   document.body.classList.toggle("dark-theme", isDarkTheme);
@@ -28,8 +30,12 @@ const route = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { index: true, element: <Landing /> },
-      { path: "register", element: <Register /> },
-      { path: "login", Component: Login },
+      {
+        path: "register",
+        element: <Register />,
+        action: registerAction,
+      },
+      { path: "login", Component: Login, action: loginaction },
       {
         path: "dashboard",
         element: <DashboardLayout />,

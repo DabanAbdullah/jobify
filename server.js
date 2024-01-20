@@ -24,6 +24,10 @@ app.use("/api/v1/jobs", authenticateUser, JobRouter);
 app.use("/api/v1/Auth", AuthRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
+});
+
 app.get("*", (req, res) => {
   res.status(400).json({ msg: "not route found" });
 });
