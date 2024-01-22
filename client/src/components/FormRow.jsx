@@ -5,7 +5,7 @@ export const FormRow = ({
   name,
   LabelText,
   placeholder,
-  value,
+  defaultValue,
   onChange,
 }) => {
   return (
@@ -17,10 +17,9 @@ export const FormRow = ({
         type={type}
         id={name}
         name={name}
-        value={value}
+        defaultValue={defaultValue}
         className="form-input"
         placeholder={placeholder}
-        onChange={onChange}
         required
       />
     </div>

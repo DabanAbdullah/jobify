@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 export const getalljobs = async (req, res) => {
   console.log(req.user);
   const jobs = await Job.find({ createdBy: req.user.userId });
+  console.log(jobs);
   res.status(StatusCodes.OK).json({ jobs });
 };
 
