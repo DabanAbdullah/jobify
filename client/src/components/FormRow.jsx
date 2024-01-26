@@ -1,29 +1,20 @@
 import React from "react";
-
-export const FormRow = ({
-  type,
-  name,
-  LabelText,
-  placeholder,
-  defaultValue,
-  onChange,
-}) => {
+const FormRow = ({ type, name, labelText, defaultValue, onChange }) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
-        {LabelText || name}
+        {labelText || name}
       </label>
       <input
         type={type}
         id={name}
         name={name}
-        defaultValue={defaultValue}
         className="form-input"
-        placeholder={placeholder}
+        defaultValue={defaultValue || ""}
+        onChange={onChange}
         required
       />
     </div>
   );
 };
-
 export default FormRow;
