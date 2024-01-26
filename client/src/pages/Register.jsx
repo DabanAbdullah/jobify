@@ -1,4 +1,4 @@
-import { FormRow, Logo } from "../components";
+import { FormRow, Logo, SubmitBtn } from "../components";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { Form, redirect, useNavigation, Link } from "react-router-dom";
 import React, { useState } from "react";
@@ -20,7 +20,7 @@ export const action = async ({ request }) => {
 
 export const Register = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+
   // const [formData, setFormData] = useState({
   //   name: "",
   //   lastName: "",
@@ -113,9 +113,11 @@ export const Register = () => {
 
         {passwordError && <p className="error-message">{passwordError}</p>}
 
-        <button type="submit" className="btn btn-block">
-          {isSubmitting ? "submitting..." : "submit"}
-        </button>
+        <SubmitBtn
+          formBtn
+          name={"Register"}
+          action={"Registering user..."}
+        ></SubmitBtn>
         <p>
           Already a member?
           <Link to="/login" className="member-btn">

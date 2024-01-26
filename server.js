@@ -6,7 +6,17 @@ const app = express();
 import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-app.use(cookieParser());
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+import cloudinary from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 //custom import
 import JobRouter from "./routers/jobRouter.js";
@@ -15,6 +25,8 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import { authenticateUser } from "./middleware/authMiddleware.js";
 import userRouter from "./routers/userRouter.js";
 
+app.use(express.static(path.resolve(__dirname, "./public")));
+app.use(cookieParser());
 if (process.env.NODE_ENV === "Development") {
   app.use(morgan("dev"));
 }

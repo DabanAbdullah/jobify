@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 const router = Router();
 
 import {
@@ -8,7 +9,10 @@ import {
 } from "../controllers/userController.js";
 
 import { validateUpdateUserInput } from "../middleware/validationMiddleware.js";
-import { authorizePermissions } from "../middleware/authMiddleware.js";
+import {
+  authorizePermissions,
+  checkForTestUser,
+} from "../middleware/authMiddleware.js";
 
 router.get("/current-user", getCurrentUser);
 router.get(
@@ -16,5 +20,13 @@ router.get(
   authorizePermissions("admin"),
   getApplicationStats
 );
-router.patch("/update-user", validateUpdateUserInput, updateUser);
+
+import upload from "../middleware/multerMiddleware.js";
+router.patch(
+  "/update-user",
+  checkForTestUser,
+  upload.single("avatar"),
+  validateUpdateUserInput,
+  updateUser
+);
 export default router;

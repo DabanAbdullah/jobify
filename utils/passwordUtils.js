@@ -13,5 +13,9 @@ export async function comparePassword(password, hashedPassword) {
   return isMatch;
 }
 
-// const pass = await hashpassword("Daban@123");
+// var pass = await hashpassword("Daban@123");
+// console.log(pass);
+// pass = await hashpassword("Daban@123");
+// console.log(pass);
+// pass = await hashpassword("Daban@123");
 // console.log(pass);
